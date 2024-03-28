@@ -1,0 +1,115 @@
+<html>
+
+<head>
+
+	<script>
+
+
+		nome = prompt('Olá usuario, qual é seu nome')
+		alert('Olá ' + nome + ' é um prazer ter você por aqui' )
+		var saldo = 100.5; //Float
+		var extrato = ['Camiseta Confortavel: -40R$\n', 'Loja do Seu ZÉ: -7R$\n' , 'CAEDU: -120R$\n', 'Babylon Discos: -100R$']
+
+		function password(){
+			senha =	3949
+			acess = false;
+			
+			while(acess = false){
+				inputUser = parseInt(prompt('Digite a senha antes de realizar está ação'))
+				if (senha == inputUser){
+				acess = true	
+			}else{
+				alert('Senha Incorreta')
+			}
+			}
+		}	
+
+		function inicio() {
+			var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Depósito 3.) Saque 4.) Extrato 5.)Sair'));
+	
+			switch(escolha){
+				case 1: ver_saldo();
+				break
+
+				case 2: fazer_deposito();
+				break
+
+				case 3: fazer_saque()
+				break
+			
+				case 4: verExtrato()
+				break
+
+				case 5: sair()
+				break
+
+				default: erro()
+	
+			}
+
+		}		
+
+		function ver_saldo() {
+			alert('Seu saldo atual é: ' + saldo);
+			inicio();
+		}
+
+		function fazer_deposito() {
+			var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+			// Not a Number
+			if (isNaN(deposito) || deposito === '') {
+				alert('Por favor, informe um número:');
+				fazer_deposito();
+			}else if(deposito <= 0){
+				alert('Impossivel depositar nada:');
+				fazer_deposito();
+			} else {
+				saldo += deposito;
+				ver_saldo();
+			}
+		}
+
+		function fazer_saque() {
+			alert('Seu saldo é: ' + saldo)		
+			var saque = parseFloat(prompt('Qual o valor para saque?'));
+			if (isNaN(saque) || saque === '') {
+				alert('Por favor, informe um número:');
+				fazer_saque();
+			} else if(saque > saldo){
+				alert('Impossível sacar um valor mais que o seu saldo')
+				fazer_saque();
+			}else {
+				saldo -= saque;	
+				ver_saldo();
+			}
+		}
+		function verExtrato(){
+			alert('Seu historico de compras: '+ extrato)
+			inicio()
+		}
+
+		function erro() {
+			alert('Por favor, informe um número entre 1 e 4');
+			inicio();
+		}
+
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				window.close();
+			} else {
+				inicio();
+			}
+		}
+
+		
+		
+		inicio();
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>
