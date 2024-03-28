@@ -4,43 +4,46 @@
 
 	<script>
 
-
 		nome = prompt('Olá usuario, qual é seu nome')
 		alert('Olá ' + nome + ' é um prazer ter você por aqui' )
 		var saldo = 100.5; //Float
-		var extrato = ['Camiseta Confortavel: -40R$\n', 'Loja do Seu ZÉ: -7R$\n' , 'CAEDU: -120R$\n', 'Babylon Discos: -100R$']
-
+		var extrato = ['\nCamiseta Confortavel: -40R$', 'Deposito de: 170R$', '\nLoja do Seu ZÉ: -7R$' , '\nCAEDU: -120R$\n', 'Babylon Disco/s: -100R$']
+	
 		function password(){
-			senha =	3949
-			acess = false;
-			
-			while(acess = false){
-				inputUser = parseInt(prompt('Digite a senha antes de realizar está ação'))
-				if (senha == inputUser){
-				acess = true	
-			}else{
-				alert('Senha Incorreta')
+		var senha = 3589;
+		var acess = false;
+		var tentativas = 0;
+		
+		while(!acess){
+			var inputUser = parseInt(prompt('Digite a senha antes de realizar esta ação'));
+			if (senha === inputUser){
+				acess = true;
+			} else {
+				alert('Senha Incorreta'); 
 			}
-			}
-		}	
+		}
+    }
 
 		function inicio() {
-			var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Depósito 3.) Saque 4.) Extrato 5.)Sair'));
+			var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo  2.) Extrato  3.)Saque  4.)Depósito  5.)Transferência  6.)Sair'));
 	
 			switch(escolha){
 				case 1: ver_saldo();
 				break
 
-				case 2: fazer_deposito();
+				case 2: verExtrato()
 				break
-
+		
 				case 3: fazer_saque()
 				break
-			
-				case 4: verExtrato()
+				
+				case 4: fazer_deposito();
 				break
 
-				case 5: sair()
+				case 5: fazerTransferencia();
+				break
+
+				case 6: sair()
 				break
 
 				default: erro()
@@ -50,11 +53,14 @@
 		}		
 
 		function ver_saldo() {
+			password();
+			
 			alert('Seu saldo atual é: ' + saldo);
 			inicio();
 		}
 
 		function fazer_deposito() {
+			password();
 			var deposito = parseFloat(prompt('Qual o valor para depósito?'));
 			// Not a Number
 			if (isNaN(deposito) || deposito === '') {
@@ -70,7 +76,7 @@
 		}
 
 		function fazer_saque() {
-			alert('Seu saldo é: ' + saldo)		
+			password();		
 			var saque = parseFloat(prompt('Qual o valor para saque?'));
 			if (isNaN(saque) || saque === '') {
 				alert('Por favor, informe um número:');
@@ -78,24 +84,53 @@
 			} else if(saque > saldo){
 				alert('Impossível sacar um valor mais que o seu saldo')
 				fazer_saque();
+			}else if(saque <= 0 ){
+				alert('Impossivel sacar 0 ou menos reais, tente novamente')
+				fazer_saque();
 			}else {
 				saldo -= saque;	
 				ver_saldo();
 			}
 		}
 		function verExtrato(){
+			password();
 			alert('Seu historico de compras: '+ extrato)
 			inicio()
 		}
+		function fazerTransferencia(){
+			password();
+			codBanco  = parseInt(prompt('Digite o número da outra conta: '));
+			while(codBanco == '' || isNaN(codBanco)){
+				alert('Apenas são permitido números.')	
+				codBanco  = parseInt(prompt('Digite o número da outra conta: '));	
+			}
+
+			var tranferValue = parseInt(prompt('Qual o valor para tranferencia'));
+
+			if (isNaN(tranferValue) || tranferValue === '') {
+				alert('Por favor, informe um número:');
+				fazer_tranferValue();
+			} else if(tranferValue > saldo){
+				alert('Impossível transferir um valor maior que o seu saldo')
+				fazer_tranferValue();
+			}else if(tranferValue <= 0 ){
+				alert('Impossivel transferir 0 ou menos reais, tente novamente')
+				fazer_tranferValue();
+			}else {
+				saldo -= tranferValue;	
+				ver_saldo();
+			}
+		}
 
 		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
+			alert('Por favor, informe um número entre 1 e 6')
 			inicio();
 		}
 
 		function sair() {
 			var confirma = confirm('Você deseja sair?');
 			if (confirma) {
+				alert('Foi um prazer ajuda-lo '+nome )
 				window.close();
 			} else {
 				inicio();
